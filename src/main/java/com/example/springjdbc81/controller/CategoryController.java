@@ -3,6 +3,7 @@ package com.example.springjdbc81.controller;
 import com.example.springjdbc81.dao.CategoryDao;
 import com.example.springjdbc81.model.Category;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +28,11 @@ public class CategoryController {
         return categoryDao.create(category);
     }
     @PutMapping
-    public Category update(@PathVariable Category category){
+    public Category update(@RequestBody Category category){
         return categoryDao.update(category);
     }
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable int id){
         categoryDao.deleteById(id);
     }

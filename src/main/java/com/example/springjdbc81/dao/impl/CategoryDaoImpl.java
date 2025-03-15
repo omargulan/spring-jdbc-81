@@ -1,13 +1,14 @@
-package com.example.springjdbc81.dao;
+package com.example.springjdbc81.dao.impl;
 
+import com.example.springjdbc81.dao.CategoryDao;
 import com.example.springjdbc81.model.Category;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -61,11 +62,17 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public Category update(Category category) {
-        return null;
+        String sql = "update categories set name = ? where id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, category.getName(), category.getId());
+        if (rowsAffected==0){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND); //404
+        }
+        return category;
     }
 
     @Override
     public void deleteById(int id) {
-
+        String sql = "delete from categories  where id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }
