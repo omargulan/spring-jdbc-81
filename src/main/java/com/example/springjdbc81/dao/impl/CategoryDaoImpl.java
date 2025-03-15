@@ -20,15 +20,6 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public List<Category> findAll() {
         String sql = "select * from categories";
-//        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
-//        List<Category> categories = new ArrayList<>();
-//        while (sqlRowSet.next()){
-//            int id = sqlRowSet.getInt("id");
-//            String name = sqlRowSet.getString("name");
-//
-//            Category category = new Category(id, name);
-//            categories.add(category);
-//        }
 
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Category.class));
     }
@@ -44,9 +35,6 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public Category create(Category category) {
-//        String sql = "insert into categories (name) values (?)";
-//        int rowsAffected = jdbcTemplate.update(sql, category.getName());
-//        System.out.println("rowsAffected =  " + rowsAffected);
         SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("categories")
                 .usingGeneratedKeyColumns("id");

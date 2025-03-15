@@ -52,7 +52,10 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product create(Product product) {
-        return null;
+        String sql = "INSERT INTO products (name, price, category_id) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getCategory().getId());
+        return product;
+
     }
 
     public Product mapRow(ResultSet rs, int rowNum) throws SQLException{
